@@ -50,9 +50,18 @@ class Puzzle:
                     return r, c
 
     def move(self, direction):
+        directions = {
+            "w": (-1, 0),
+            "s": (1, 0),
+            "a": (0, -1),
+            "d": (0, 1)
+        }
+
+        if direction not in directions:
+            return False
+
         r, c = self.blank_pos()
-        dr, dc = {"w": (-1, 0), "s": (1, 0),
-                  "a": (0, -1), "d": (0, 1)}[direction]
+        dr, dc = directions[direction]
         nr, nc = r + dr, c + dc
 
         if not (0 <= nr < self.size and 0 <= nc < self.size):
@@ -62,7 +71,6 @@ class Puzzle:
             self.board[nr][nc], self.board[r][c]
         )
         return True
-
     def solved(self):
         return sum(self.board, []) == (
             list(range(1, self.size * self.size)) + [0]
