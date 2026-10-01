@@ -17,18 +17,29 @@ class SlidingPuzzle:
 
     def run(self):
         print("Sliding Puzzle — W/A/S/D moves the tile into the blank. Q quits.")
+
         while True:
             self.display()
+
             if self.puzzle.solved():
                 print("Solved!")
-                return
+                break
+
             key = input("> ").strip().lower()
+
             if key == "q":
                 return
+
             if key not in "wasd":
                 print("Use W/A/S/D.")
                 continue
+
             if self.puzzle.move(key):
                 self.moves += 1
+
+                if self.puzzle.solved():
+                    self.display()
+                    print("Solved!")
+                    break
             else:
                 print("That move is not possible.")
